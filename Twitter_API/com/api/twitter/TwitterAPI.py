@@ -18,8 +18,8 @@ nltk.download('punkt')
 
 ACCESS_TOKEN = '964929660143439873-dH104TJExRHK1KJM4BoaQFaTXHlLClb'
 ACCESS_SECRET = 'Ned0SCdZVbEbLEeSMQ0ETmMozTV6Gczd2Fi8vYzgvxTiR'
-CONSUMER_KEY = 'LqmguwFU22tkiaTjPXpDbGknM'
-CONSUMER_SECRET = 'j5G9GPfx1jOx1iEKrDJL4pujtZAvYOrkRxxvZCh8KyHj9G1jvQ'
+CONSUMER_KEY = 'zpUK7eFMfe5qY6X7PBvybbf56'
+CONSUMER_SECRET = '6o4B0bj2a7xKM9CZzBAbXAziR7l8lEKaUSlLpZyiMyEIlag2RD'
 SEARCH = input("Enter the search string ")
 FROM = input("Enter the from date (YYYY-MM-DD format) ")
 TO = input("Enter the to data (YYYY-MM-DD format) ")
@@ -96,7 +96,7 @@ tweetsDataframe.head()
 
 #Top n users who have tweeted the most related to the search string for the entire timeline
 userCount = tweetsDataframe['username'].groupby(tweetsDataframe['username']).count().reset_index(name="count")
-userCount = userCount.sort_values(by = 'count',ascending=False)
+userCount = userCount.sort_values(by = 'count',ascending=False).head(10)
 userCount = userCount
 
 userCount.to_csv('MostTweetedUsers.csv', sep=',')
@@ -115,7 +115,7 @@ topEveryHour = tweetsDataframe[tweetsDataframe['hour']=='05'][['username', 'hour
 
 
 #The top n users who have the maximum followers.
-userCount = tweetsDataframe.drop(columns=['createdAt','text','retweetCount','hour'], axis=1).sort_values(by='followers', ascending=False).groupby(tweetsDataframe['username']).head().drop_duplicates()
+userCount = tweetsDataframe.drop(columns=['createdAt','text','retweetCount','hour'], axis=1).sort_values(by='followers', ascending=False).groupby(tweetsDataframe['username']).head().drop_duplicates().head(10)
 
 userCount.to_csv('MostFollowerUsers.csv', sep=',')
 
@@ -123,7 +123,7 @@ userCount.to_csv('MostFollowerUsers.csv', sep=',')
 
 
 #The top n tweets which have the maximum retweet count.
-userCount = tweetsDataframe.drop(columns=['createdAt','username','followers','hour'], axis=1).sort_values(by='retweetCount', ascending=False).groupby(tweetsDataframe['text']).head().drop_duplicates()
+userCount = tweetsDataframe.drop(columns=['createdAt','username','followers','hour'], axis=1).sort_values(by='retweetCount', ascending=False).groupby(tweetsDataframe['text']).head().drop_duplicates().head(10)
 
 userCount.to_csv('MaxRetweetCountUsers.csv', sep=',')
 
